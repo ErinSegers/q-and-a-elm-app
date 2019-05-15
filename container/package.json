@@ -1,0 +1,20 @@
+{
+  "name": "q-a-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "elm": "0.19.0-bugfix2",
+    "elm-analyse": "0.15.1",
+    "elm-format": "0.8.1",
+    "elm-test": "0.19.0-rev3",
+    "node-sass": "^4.11.0",
+    "uglify-js": "^3.4.9",
+    "watchy": "0.9.5"
+  }
+}
