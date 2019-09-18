@@ -1,0 +1,42 @@
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: proxima-nova, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  color: #151746;
+  text-rendering: optimizeLegibility;
+}
+
+.sectionDarkBlue {
+  background-color: #151746;
+  h1, h2, h3, h4, h5, h6, p {
+    color: #ffffff;
+  }
+}
+
+p, li {
+  font-family: adelle-sans-ultra-thin, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1rem;
+  text-rendering: optimizeLegibility;
+}
+
+.answers {
+  list-style: none;
+  input {
+    border: none;
+    border-radius: .25rem;
+    background-color: #f4f4f7;
+    color: #525656;
+    &:checked, &:focus, &:hover {
+      outline-color: #00a3e0;
+      background-color: #151746;
+      color: #ffffff;
+    }
+  }
+}
