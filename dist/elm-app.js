@@ -519,11 +519,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.P.E === region.U.E)
+	if (region.L.z === region.Q.z)
 	{
-		return 'on line ' + region.P.E;
+		return 'on line ' + region.L.z;
 	}
-	return 'on lines ' + region.P.E + ' through ' + region.U.E;
+	return 'on lines ' + region.L.z + ' through ' + region.Q.z;
 }
 
 
@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.az,
-		impl.aH,
-		impl.aF,
+		impl.av,
+		impl.aD,
+		impl.aB,
 		function() { return function() {} }
 	);
 });
@@ -2659,9 +2659,9 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		o: func(record.o),
-		Q: record.Q,
-		O: record.O
+		k: func(record.k),
+		M: record.M,
+		J: record.J
 	}
 });
 
@@ -2929,11 +2929,11 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.o;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.Q;
+		var message = !tag ? value : tag < 3 ? value.a : value.k;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.M;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.O) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.J) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3883,11 +3883,11 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.az,
-		impl.aH,
-		impl.aF,
+		impl.av,
+		impl.aD,
+		impl.aB,
 		function(sendToApp, initialModel) {
-			var view = impl.aJ;
+			var view = impl.aF;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -3919,12 +3919,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.az,
-		impl.aH,
-		impl.aF,
+		impl.av,
+		impl.aD,
+		impl.aB,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.F && impl.F(sendToApp)
-			var view = impl.aJ;
+			var divertHrefToApp = impl.A && impl.A(sendToApp)
+			var view = impl.aF;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3932,12 +3932,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.as);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.ao);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.aG) && (_VirtualDom_doc.title = title = doc.aG);
+				(title !== doc.aC) && (_VirtualDom_doc.title = title = doc.aC);
 			});
 		}
 	);
@@ -3993,12 +3993,12 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.aB;
-	var onUrlRequest = impl.aC;
+	var onUrlChange = impl.ax;
+	var onUrlRequest = impl.ay;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		F: function(sendToApp)
+		A: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4014,9 +4014,9 @@ function _Browser_application(impl)
 					var next = elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.ag === next.ag
-							&& curr.X === next.X
-							&& curr.ad.a === next.ad.a
+							&& curr.ac === next.ac
+							&& curr.T === next.T
+							&& curr._.a === next._.a
 						)
 							? elm$browser$Browser$Internal(next)
 							: elm$browser$Browser$External(href)
@@ -4024,13 +4024,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		az: function(flags)
+		av: function(flags)
 		{
-			return A3(impl.az, flags, _Browser_getUrl(), key);
+			return A3(impl.av, flags, _Browser_getUrl(), key);
 		},
-		aJ: impl.aJ,
-		aH: impl.aH,
-		aF: impl.aF
+		aF: impl.aF,
+		aD: impl.aD,
+		aB: impl.aB
 	});
 }
 
@@ -4096,17 +4096,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { ax: 'hidden', at: 'visibilitychange' }
+		? { at: 'hidden', ap: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { ax: 'mozHidden', at: 'mozvisibilitychange' }
+		? { at: 'mozHidden', ap: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { ax: 'msHidden', at: 'msvisibilitychange' }
+		? { at: 'msHidden', ap: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { ax: 'webkitHidden', at: 'webkitvisibilitychange' }
-		: { ax: 'hidden', at: 'visibilitychange' };
+		? { at: 'webkitHidden', ap: 'webkitvisibilitychange' }
+		: { at: 'hidden', ap: 'visibilitychange' };
 }
 
 
@@ -4187,12 +4187,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		am: _Browser_getScene(),
-		ap: {
-			K: _Browser_window.pageXOffset,
-			L: _Browser_window.pageYOffset,
-			C: _Browser_doc.documentElement.clientWidth,
-			x: _Browser_doc.documentElement.clientHeight
+		ai: _Browser_getScene(),
+		al: {
+			F: _Browser_window.pageXOffset,
+			G: _Browser_window.pageYOffset,
+			x: _Browser_doc.documentElement.clientWidth,
+			s: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4202,8 +4202,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		C: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		x: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		x: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		s: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4226,15 +4226,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			am: {
-				C: node.scrollWidth,
-				x: node.scrollHeight
+			ai: {
+				x: node.scrollWidth,
+				s: node.scrollHeight
 			},
-			ap: {
-				K: node.scrollLeft,
-				L: node.scrollTop,
-				C: node.clientWidth,
-				x: node.clientHeight
+			al: {
+				F: node.scrollLeft,
+				G: node.scrollTop,
+				x: node.clientWidth,
+				s: node.clientHeight
 			}
 		};
 	});
@@ -4264,18 +4264,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			am: _Browser_getScene(),
-			ap: {
-				K: x,
-				L: y,
-				C: _Browser_doc.documentElement.clientWidth,
-				x: _Browser_doc.documentElement.clientHeight
+			ai: _Browser_getScene(),
+			al: {
+				F: x,
+				G: y,
+				x: _Browser_doc.documentElement.clientWidth,
+				s: _Browser_doc.documentElement.clientHeight
 			},
-			au: {
-				K: x + rect.left,
-				L: y + rect.top,
-				C: rect.width,
-				x: rect.height
+			aq: {
+				F: x + rect.left,
+				G: y + rect.top,
+				x: rect.width,
+				s: rect.height
 			}
 		};
 	});
@@ -4310,9 +4310,9 @@ function _Browser_load(url)
 		}
 	}));
 }
-var author$project$Main$Model = F4(
-	function (quizName, intro, quizScore, questions) {
-		return {Y: intro, ai: questions, aj: quizName, u: quizScore};
+var author$project$Main$QuizQuestion = F2(
+	function (question, options) {
+		return {X: options, ae: question};
 	});
 var elm$core$Basics$EQ = 1;
 var elm$core$Basics$LT = 0;
@@ -4394,143 +4394,114 @@ var elm$core$Set$toList = function (_n0) {
 	var dict = _n0;
 	return elm$core$Dict$keys(dict);
 };
-var author$project$Main$quiz = _List_fromArray(
-	[
-		{
-		i: _List_fromArray(
-			[
-				{b: 1, a: 'Strongly Disagree'},
-				{b: 2, a: 'Disagree'},
-				{b: 3, a: 'Neutral'},
-				{b: 4, a: 'Agree'},
-				{b: 5, a: 'Strongly Agree'}
-			]),
-		j: '1. My team can clearly articulate their goals'
-	},
-		{
-		i: _List_fromArray(
-			[
-				{b: 1, a: 'Strongly Disagree'},
-				{b: 2, a: 'Disagree'},
-				{b: 3, a: 'Neutral'},
-				{b: 4, a: 'Agree'},
-				{b: 5, a: 'Strongly Agree'}
-			]),
-		j: '2. My team feels recognized for their accomplishments'
-	},
-		{
-		i: _List_fromArray(
-			[
-				{b: 1, a: 'Strongly Disagree'},
-				{b: 2, a: 'Disagree'},
-				{b: 3, a: 'Neutral'},
-				{b: 4, a: 'Agree'},
-				{b: 5, a: 'Strongly Agree'}
-			]),
-		j: '3. All team members have personal development plans and see regular progress towards their goals'
-	},
-		{
-		i: _List_fromArray(
-			[
-				{b: 1, a: 'Strongly Disagree'},
-				{b: 2, a: 'Disagree'},
-				{b: 3, a: 'Neutral'},
-				{b: 4, a: 'Agree'},
-				{b: 5, a: 'Strongly Agree'}
-			]),
-		j: '4. My team feels empowered to make decisions'
-	},
-		{
-		i: _List_fromArray(
-			[
-				{b: 1, a: 'Strongly Disagree'},
-				{b: 2, a: 'Disagree'},
-				{b: 3, a: 'Neutral'},
-				{b: 4, a: 'Agree'},
-				{b: 5, a: 'Strongly Agree'}
-			]),
-		j: '5. My team is more efficient when I’m not there'
-	},
-		{
-		i: _List_fromArray(
-			[
-				{b: 1, a: 'Strongly Disagree'},
-				{b: 2, a: 'Disagree'},
-				{b: 3, a: 'Neutral'},
-				{b: 4, a: 'Agree'},
-				{b: 5, a: 'Strongly Agree'}
-			]),
-		j: '6. My team has productive meetings that everyone is involved in (but only when necessary)'
-	},
-		{
-		i: _List_fromArray(
-			[
-				{b: 1, a: 'Strongly Disagree'},
-				{b: 2, a: 'Disagree'},
-				{b: 3, a: 'Neutral'},
-				{b: 4, a: 'Agree'},
-				{b: 5, a: 'Strongly Agree'}
-			]),
-		j: '7. Team members will openly express their opinions and concerns'
-	},
-		{
-		i: _List_fromArray(
-			[
-				{b: 1, a: 'Strongly Disagree'},
-				{b: 2, a: 'Disagree'},
-				{b: 3, a: 'Neutral'},
-				{b: 4, a: 'Agree'},
-				{b: 5, a: 'Strongly Agree'}
-			]),
-		j: '8. Other people want to be on our team'
-	},
-		{
-		i: _List_fromArray(
-			[
-				{b: 1, a: 'Strongly Disagree'},
-				{b: 2, a: 'Disagree'},
-				{b: 3, a: 'Neutral'},
-				{b: 4, a: 'Agree'},
-				{b: 5, a: 'Strongly Agree'}
-			]),
-		j: '9. My team has created their own set of operating guidelines and practices which they are fully bought into'
-	},
-		{
-		i: _List_fromArray(
-			[
-				{b: 1, a: 'Strongly Disagree'},
-				{b: 2, a: 'Disagree'},
-				{b: 3, a: 'Neutral'},
-				{b: 4, a: 'Agree'},
-				{b: 5, a: 'Strongly Agree'}
-			]),
-		j: '10. All team members hold each other, including me, acquizScoreable for outcomes'
-	}
-	]);
-var author$project$Main$init = A4(author$project$Main$Model, 'Grade Your Team', 'Do you know if your team is performing at their highest potential? Take this quiz to find out where your team can improve to max potential.', 0, author$project$Main$quiz);
+var author$project$Main$optionsList = _List_fromArray(
+	['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree']);
+var author$project$Main$questionsList = _List_fromArray(
+	['1. My team can clearly articulate their goals', '2. My team feels recognized for their accomplishments', '3. All team members have personal development plans and see regular progress towards their goals', '4. My team feels empowered to make decisions', '5. My team is more efficient when I’m not there', '6. My team has productive meetings that everyone is involved in (but only when necessary)', '7. Team members will openly express their opinions and concerns', '8. Other people want to be on our team', '9. My team has created their own set of operating guidelines and practices which they are fully bought into', '10. All team members hold each other, including me, accountable for outcomes']);
 var elm$core$Basics$add = _Basics_add;
-var elm$core$Basics$sub = _Basics_sub;
-var author$project$Main$update = F2(
-	function (msg, model) {
-		switch (msg) {
-			case 0:
-				var newModel = _Utils_update(
-					model,
-					{u: model.u + 1});
-				return newModel;
-			case 1:
-				var newModel = _Utils_update(
-					model,
-					{u: model.u - 1});
-				return newModel;
-			default:
-				var newModel = _Utils_update(
-					model,
-					{u: 0});
-				return newModel;
+var elm$core$Basics$gt = _Utils_gt;
+var elm$core$List$foldl = F3(
+	function (func, acc, list) {
+		foldl:
+		while (true) {
+			if (!list.b) {
+				return acc;
+			} else {
+				var x = list.a;
+				var xs = list.b;
+				var $temp$func = func,
+					$temp$acc = A2(func, x, acc),
+					$temp$list = xs;
+				func = $temp$func;
+				acc = $temp$acc;
+				list = $temp$list;
+				continue foldl;
+			}
 		}
 	});
-var author$project$Main$Reset = 2;
+var elm$core$List$reverse = function (list) {
+	return A3(elm$core$List$foldl, elm$core$List$cons, _List_Nil, list);
+};
+var elm$core$List$foldrHelper = F4(
+	function (fn, acc, ctr, ls) {
+		if (!ls.b) {
+			return acc;
+		} else {
+			var a = ls.a;
+			var r1 = ls.b;
+			if (!r1.b) {
+				return A2(fn, a, acc);
+			} else {
+				var b = r1.a;
+				var r2 = r1.b;
+				if (!r2.b) {
+					return A2(
+						fn,
+						a,
+						A2(fn, b, acc));
+				} else {
+					var c = r2.a;
+					var r3 = r2.b;
+					if (!r3.b) {
+						return A2(
+							fn,
+							a,
+							A2(
+								fn,
+								b,
+								A2(fn, c, acc)));
+					} else {
+						var d = r3.a;
+						var r4 = r3.b;
+						var res = (ctr > 500) ? A3(
+							elm$core$List$foldl,
+							fn,
+							acc,
+							elm$core$List$reverse(r4)) : A4(elm$core$List$foldrHelper, fn, acc, ctr + 1, r4);
+						return A2(
+							fn,
+							a,
+							A2(
+								fn,
+								b,
+								A2(
+									fn,
+									c,
+									A2(fn, d, res))));
+					}
+				}
+			}
+		}
+	});
+var elm$core$List$foldr = F3(
+	function (fn, acc, ls) {
+		return A4(elm$core$List$foldrHelper, fn, acc, 0, ls);
+	});
+var elm$core$List$map = F2(
+	function (f, xs) {
+		return A3(
+			elm$core$List$foldr,
+			F2(
+				function (x, acc) {
+					return A2(
+						elm$core$List$cons,
+						f(x),
+						acc);
+				}),
+			_List_Nil,
+			xs);
+	});
+var author$project$Main$quizQuestions = A2(
+	elm$core$List$map,
+	function (q) {
+		return A2(author$project$Main$QuizQuestion, q, author$project$Main$optionsList);
+	},
+	author$project$Main$questionsList);
+var author$project$Main$init = {K: author$project$Main$quizQuestions, ah: 0};
+var author$project$Main$update = F2(
+	function (msg, model) {
+		return model;
+	});
 var elm$core$Basics$identity = function (x) {
 	return x;
 };
@@ -4566,28 +4537,6 @@ var elm$core$Array$SubTree = function (a) {
 	return {$: 0, a: a};
 };
 var elm$core$Elm$JsArray$initializeFromList = _JsArray_initializeFromList;
-var elm$core$List$foldl = F3(
-	function (func, acc, list) {
-		foldl:
-		while (true) {
-			if (!list.b) {
-				return acc;
-			} else {
-				var x = list.a;
-				var xs = list.b;
-				var $temp$func = func,
-					$temp$acc = A2(func, x, acc),
-					$temp$list = xs;
-				func = $temp$func;
-				acc = $temp$acc;
-				list = $temp$list;
-				continue foldl;
-			}
-		}
-	});
-var elm$core$List$reverse = function (list) {
-	return A3(elm$core$List$foldl, elm$core$List$cons, _List_Nil, list);
-};
 var elm$core$Array$compressNodes = F2(
 	function (nodes, acc) {
 		compressNodes:
@@ -4640,34 +4589,34 @@ var elm$core$Basics$apL = F2(
 		return f(x);
 	});
 var elm$core$Basics$floor = _Basics_floor;
-var elm$core$Basics$gt = _Utils_gt;
 var elm$core$Basics$max = F2(
 	function (x, y) {
 		return (_Utils_cmp(x, y) > 0) ? x : y;
 	});
 var elm$core$Basics$mul = _Basics_mul;
+var elm$core$Basics$sub = _Basics_sub;
 var elm$core$Elm$JsArray$length = _JsArray_length;
 var elm$core$Array$builderToArray = F2(
 	function (reverseNodeList, builder) {
-		if (!builder.c) {
+		if (!builder.a) {
 			return A4(
 				elm$core$Array$Array_elm_builtin,
-				elm$core$Elm$JsArray$length(builder.e),
+				elm$core$Elm$JsArray$length(builder.c),
 				elm$core$Array$shiftStep,
 				elm$core$Elm$JsArray$empty,
-				builder.e);
+				builder.c);
 		} else {
-			var treeLen = builder.c * elm$core$Array$branchFactor;
+			var treeLen = builder.a * elm$core$Array$branchFactor;
 			var depth = elm$core$Basics$floor(
 				A2(elm$core$Basics$logBase, elm$core$Array$branchFactor, treeLen - 1));
-			var correctNodeList = reverseNodeList ? elm$core$List$reverse(builder.f) : builder.f;
-			var tree = A2(elm$core$Array$treeFromBuilder, correctNodeList, builder.c);
+			var correctNodeList = reverseNodeList ? elm$core$List$reverse(builder.d) : builder.d;
+			var tree = A2(elm$core$Array$treeFromBuilder, correctNodeList, builder.a);
 			return A4(
 				elm$core$Array$Array_elm_builtin,
-				elm$core$Elm$JsArray$length(builder.e) + treeLen,
+				elm$core$Elm$JsArray$length(builder.c) + treeLen,
 				A2(elm$core$Basics$max, 5, depth * elm$core$Array$shiftStep),
 				tree,
-				builder.e);
+				builder.c);
 		}
 	});
 var elm$core$Basics$idiv = _Basics_idiv;
@@ -4681,7 +4630,7 @@ var elm$core$Array$initializeHelp = F5(
 				return A2(
 					elm$core$Array$builderToArray,
 					false,
-					{f: nodeList, c: (len / elm$core$Array$branchFactor) | 0, e: tail});
+					{d: nodeList, a: (len / elm$core$Array$branchFactor) | 0, c: tail});
 			} else {
 				var leaf = elm$core$Array$Leaf(
 					A3(elm$core$Elm$JsArray$initialize, elm$core$Array$branchFactor, fromIndex, fn));
@@ -4943,7 +4892,11 @@ var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 	}
 };
 var elm$html$Html$div = _VirtualDom_node('div');
-var elm$html$Html$input = _VirtualDom_node('input');
+var elm$html$Html$h5 = _VirtualDom_node('h5');
+var elm$html$Html$li = _VirtualDom_node('li');
+var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
+var elm$html$Html$ul = _VirtualDom_node('ul');
 var elm$json$Json$Encode$string = _Json_wrap;
 var elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -4953,117 +4906,7 @@ var elm$html$Html$Attributes$stringProperty = F2(
 			elm$json$Json$Encode$string(string));
 	});
 var elm$html$Html$Attributes$class = elm$html$Html$Attributes$stringProperty('className');
-var elm$html$Html$Attributes$name = elm$html$Html$Attributes$stringProperty('name');
-var elm$html$Html$Attributes$type_ = elm$html$Html$Attributes$stringProperty('type');
-var elm$html$Html$Attributes$value = elm$html$Html$Attributes$stringProperty('value');
-var author$project$Main$optionsRating = function (option) {
-	return A2(
-		elm$html$Html$div,
-		_List_fromArray(
-			[
-				elm$html$Html$Attributes$class('answers text-center flex-even col')
-			]),
-		_List_fromArray(
-			[
-				A2(
-				elm$html$Html$input,
-				_List_fromArray(
-					[
-						elm$html$Html$Attributes$type_('button'),
-						elm$html$Html$Attributes$name('options p-2'),
-						elm$html$Html$Attributes$value(option.a),
-						elm$html$Html$Attributes$class('p-3')
-					]),
-				_List_Nil)
-			]));
-};
-var elm$core$List$foldrHelper = F4(
-	function (fn, acc, ctr, ls) {
-		if (!ls.b) {
-			return acc;
-		} else {
-			var a = ls.a;
-			var r1 = ls.b;
-			if (!r1.b) {
-				return A2(fn, a, acc);
-			} else {
-				var b = r1.a;
-				var r2 = r1.b;
-				if (!r2.b) {
-					return A2(
-						fn,
-						a,
-						A2(fn, b, acc));
-				} else {
-					var c = r2.a;
-					var r3 = r2.b;
-					if (!r3.b) {
-						return A2(
-							fn,
-							a,
-							A2(
-								fn,
-								b,
-								A2(fn, c, acc)));
-					} else {
-						var d = r3.a;
-						var r4 = r3.b;
-						var res = (ctr > 500) ? A3(
-							elm$core$List$foldl,
-							fn,
-							acc,
-							elm$core$List$reverse(r4)) : A4(elm$core$List$foldrHelper, fn, acc, ctr + 1, r4);
-						return A2(
-							fn,
-							a,
-							A2(
-								fn,
-								b,
-								A2(
-									fn,
-									c,
-									A2(fn, d, res))));
-					}
-				}
-			}
-		}
-	});
-var elm$core$List$foldr = F3(
-	function (fn, acc, ls) {
-		return A4(elm$core$List$foldrHelper, fn, acc, 0, ls);
-	});
-var elm$core$List$map = F2(
-	function (f, xs) {
-		return A3(
-			elm$core$List$foldr,
-			F2(
-				function (x, acc) {
-					return A2(
-						elm$core$List$cons,
-						f(x),
-						acc);
-				}),
-			_List_Nil,
-			xs);
-	});
-var author$project$Main$renderList = function (options) {
-	return A2(
-		elm$html$Html$div,
-		_List_fromArray(
-			[
-				elm$html$Html$Attributes$class('row d-flex justify-content-center')
-			]),
-		A2(
-			elm$core$List$map,
-			function (option) {
-				return author$project$Main$optionsRating(option);
-			},
-			options));
-};
-var elm$html$Html$h5 = _VirtualDom_node('h5');
-var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
-var author$project$Main$renderQuestion = function (quizItem) {
+var author$project$Main$renderQuestions = function (quizQuestion) {
 	return A2(
 		elm$html$Html$div,
 		_List_fromArray(
@@ -5080,38 +4923,28 @@ var author$project$Main$renderQuestion = function (quizItem) {
 					]),
 				_List_fromArray(
 					[
-						elm$html$Html$text(quizItem.j)
+						elm$html$Html$text(quizQuestion.ae)
 					])),
 				A2(
-				elm$html$Html$div,
+				elm$html$Html$ul,
 				_List_Nil,
-				_List_fromArray(
-					[
-						author$project$Main$renderList(quizItem.i)
-					]))
+				A2(
+					elm$core$List$map,
+					function (o) {
+						return A2(
+							elm$html$Html$li,
+							_List_Nil,
+							_List_fromArray(
+								[
+									elm$html$Html$text(o)
+								]));
+					},
+					quizQuestion.X))
 			]));
 };
 var elm$html$Html$button = _VirtualDom_node('button');
 var elm$html$Html$h1 = _VirtualDom_node('h1');
-var elm$html$Html$h3 = _VirtualDom_node('h3');
 var elm$html$Html$p = _VirtualDom_node('p');
-var elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 0, a: a};
-};
-var elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
-var elm$html$Html$Events$on = F2(
-	function (event, decoder) {
-		return A2(
-			elm$virtual_dom$VirtualDom$on,
-			event,
-			elm$virtual_dom$VirtualDom$Normal(decoder));
-	});
-var elm$html$Html$Events$onClick = function (msg) {
-	return A2(
-		elm$html$Html$Events$on,
-		'click',
-		elm$json$Json$Decode$succeed(msg));
-};
 var author$project$Main$view = function (model) {
 	return A2(
 		elm$html$Html$div,
@@ -5145,7 +4978,7 @@ var author$project$Main$view = function (model) {
 									]),
 								_List_fromArray(
 									[
-										elm$html$Html$text(model.aj)
+										elm$html$Html$text('Grade Your Team')
 									])),
 								A2(
 								elm$html$Html$p,
@@ -5155,7 +4988,7 @@ var author$project$Main$view = function (model) {
 									]),
 								_List_fromArray(
 									[
-										elm$html$Html$text(model.Y)
+										elm$html$Html$text('summary')
 									]))
 							]))
 					])),
@@ -5173,13 +5006,13 @@ var author$project$Main$view = function (model) {
 							[
 								elm$html$Html$Attributes$class('questions row')
 							]),
-						A2(elm$core$List$map, author$project$Main$renderQuestion, model.ai))
+						A2(elm$core$List$map, author$project$Main$renderQuestions, model.K))
 					])),
 				A2(
 				elm$html$Html$div,
 				_List_fromArray(
 					[
-						elm$html$Html$Attributes$class('sectionDarkBlue container-fluid p-0')
+						elm$html$Html$Attributes$class('row')
 					]),
 				_List_fromArray(
 					[
@@ -5187,45 +5020,16 @@ var author$project$Main$view = function (model) {
 						elm$html$Html$div,
 						_List_fromArray(
 							[
-								elm$html$Html$Attributes$class('container py-5')
+								elm$html$Html$Attributes$class('col-12 text-center pb-5')
 							]),
 						_List_fromArray(
 							[
 								A2(
-								elm$html$Html$div,
+								elm$html$Html$button,
+								_List_Nil,
 								_List_fromArray(
 									[
-										elm$html$Html$Attributes$class('row')
-									]),
-								_List_fromArray(
-									[
-										A2(
-										elm$html$Html$div,
-										_List_fromArray(
-											[
-												elm$html$Html$Attributes$class('col-12')
-											]),
-										_List_fromArray(
-											[
-												A2(
-												elm$html$Html$h3,
-												_List_Nil,
-												_List_fromArray(
-													[
-														elm$html$Html$text(
-														'Your Score: ' + elm$core$String$fromInt(model.u))
-													])),
-												A2(
-												elm$html$Html$button,
-												_List_fromArray(
-													[
-														elm$html$Html$Events$onClick(2)
-													]),
-												_List_fromArray(
-													[
-														elm$html$Html$text('Retake Quiz')
-													]))
-											]))
+										elm$html$Html$text('See my results')
 									]))
 							]))
 					]))
@@ -5351,7 +5155,7 @@ var elm$core$String$contains = _String_contains;
 var elm$core$String$toInt = _String_toInt;
 var elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {W: fragment, X: host, ab: path, ad: port_, ag: protocol, ah: query};
+		return {S: fragment, T: host, Y: path, _: port_, ac: protocol, ad: query};
 	});
 var elm$url$Url$chompBeforePath = F5(
 	function (protocol, path, params, frag, str) {
@@ -5458,22 +5262,22 @@ var elm$url$Url$fromString = function (str) {
 var elm$browser$Browser$sandbox = function (impl) {
 	return _Browser_element(
 		{
-			az: function (_n0) {
-				return _Utils_Tuple2(impl.az, elm$core$Platform$Cmd$none);
+			av: function (_n0) {
+				return _Utils_Tuple2(impl.av, elm$core$Platform$Cmd$none);
 			},
-			aF: function (_n1) {
+			aB: function (_n1) {
 				return elm$core$Platform$Sub$none;
 			},
-			aH: F2(
+			aD: F2(
 				function (msg, model) {
 					return _Utils_Tuple2(
-						A2(impl.aH, msg, model),
+						A2(impl.aD, msg, model),
 						elm$core$Platform$Cmd$none);
 				}),
-			aJ: impl.aJ
+			aF: impl.aF
 		});
 };
 var author$project$Main$main = elm$browser$Browser$sandbox(
-	{az: author$project$Main$init, aH: author$project$Main$update, aJ: author$project$Main$view});
+	{av: author$project$Main$init, aD: author$project$Main$update, aF: author$project$Main$view});
 _Platform_export({'Main':{'init':author$project$Main$main(
 	elm$json$Json$Decode$succeed(0))(0)}});}(this));
