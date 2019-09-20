@@ -13,12 +13,21 @@ main =
 type alias Model =
     { quiz : List QuizQuestion
     , results : Int
+    , debug : String
     }
 
 
 type alias QuizQuestion =
     { question : String
-    , options : List String
+    , options : List QuizOption
+    , answer : Maybe QuizOption
+    }
+
+
+type alias QuizOption =
+    { label : String
+    , rating : Int
+    , index : Int
     }
 
 
@@ -28,13 +37,19 @@ type alias QuizQuestion =
 
 quizQuestions : List QuizQuestion
 quizQuestions =
-    List.map (\q -> QuizQuestion q optionsList) questionsList
+    List.map (\q -> QuizQuestion q quizOptions Nothing) questionsList
+
+
+quizOptions : List QuizOption
+quizOptions =
+    List.indexedMap (\i o -> QuizOption o (i + 1) i) optionsList
 
 
 init : Model
 init =
     { quiz = quizQuestions
     , results = 0
+    , debug = ""
     }
 
 
@@ -64,13 +79,23 @@ optionsList =
 
 
 type Msg
-    = AnswerQuestion
+    = SelectAnswer QuizOption
 
 
 update : Msg -> Model -> Model
 update msg model =
     case msg of
-        AnswerQuestion ->
+        SelectAnswer o ->
+            let
+                beforeIndex =
+                    List.take o.index optionsList
+
+                afterIndex =
+                    List.drop (o.index + 1) optionsList
+
+                updatedAnswer =
+                    { model | results = o.rating }
+            in
             model
 
 
@@ -80,7 +105,7 @@ view model =
         [ div [ class "sectionDarkBlue row py-5" ]
             [ div [ class "col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-center" ]
                 [ h1 [ class "text-center mb-3" ] [ text "Grade Your Team" ]
-                , p [ class "intro" ] [ text "summary" ]
+                , p [ class "intro" ] [ text "Are you wondering if your team is effective? Are you meeting goals successfully? Take this quiz to find out where your team stands." ]
                 ]
             ]
         , div [ class "container mb-5" ]
@@ -102,6 +127,17 @@ renderQuestions : QuizQuestion -> Html Msg
 renderQuestions quizQuestion =
     div [ class "col-12" ]
         [ h5 [ class "mt-5 mb-3" ] [ text quizQuestion.question ]
-        , ul []
-            (List.map (\o -> li [] [ text o ]) quizQuestion.options)
+        , div [ class "answers row d-flex justify-content-between" ]
+            (List.map
+                (\o ->
+                    input
+                        [ type_ "button"
+                        , class "col-12 col-lg-auto px-5 py-2 m-2 mx-lg-0"
+                        , value o.label
+                        , onClick (SelectAnswer o)
+                        ]
+                        []
+                )
+                quizQuestion.options
+            )
         ]
